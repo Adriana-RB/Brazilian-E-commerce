@@ -1,0 +1,89 @@
+//Creación de tablas
+CREATE TABLE "Olist_order_dataset" (
+  "order_id" Varchar(255),
+  "customer_id" Varchar(255),
+  "order_status" Text,
+  "order_purchase_timestamp" Datetime(),
+  "order_approved_at" Datetime(),
+  "order_delivered_carrier_date" Datetime(),
+  "order_delivered_customer_date" Datetime(),
+  "order_estimated_delivery_date" Datetime()
+);
+
+CREATE TABLE "Olist_sellers _dataset" (
+  "Seller_id" Varchar(255),
+  "Seller_zip_code_prefix" Int,
+  "Seller_city" Varchar(255),
+  "Seller_state" Char()
+);
+
+CREATE TABLE "Olist_order_items_dataset" (
+  "order_id" Varchar(255),
+  "order_item_id" Int,
+  "product_id" Varchar(255),
+  "seller_id" Varchar(255),
+  "shipping_limit_date" Datetime(),
+  "price" Float,
+  "freight_value" Float,
+  CONSTRAINT "FK_Olist_order_items_dataset.product_id"
+    FOREIGN KEY ("product_id")
+      REFERENCES "Olist_order_dataset"("order_purchase_timestamp"),
+  CONSTRAINT "FK_Olist_order_items_dataset.product_id"
+    FOREIGN KEY ("product_id")
+      REFERENCES "Olist_sellers _dataset"("Seller_zip_code_prefix")
+);
+
+CREATE TABLE "Olist_geolocation_dataset" (
+  "geolocation_zip_code_prefix" Int,
+  "geolocation_lat" Float,
+  "geolocation_lng" Float,
+  "geolocation_city" Varchar(255),
+  "geolocation_state" Char()
+);
+
+CREATE TABLE "Olist_customers_dataset" (
+  "customer_id" Varchar(255),
+  "customer_unique_id" Varchar(255),
+  "customer_zip_code_prefix" Int,
+  "customer_city" Text,
+  "customer_state" Char()
+);
+
+CREATE TABLE "Olist_order_payments_dataset" (
+  "order_id" Varchar(255),
+  "payment_sequencial" Int,
+  "payment_type" Varchar(255),
+  "payment_installments" Int,
+  "payment_value" Float
+);
+
+CREATE TABLE "Olist_order_reviews_dataset" (
+  "review_id" Varchar(255),
+  "order_id" Varchar(255),
+  "review_score" Int,
+  "review_comment_tittle" Text,
+  "review_comment_message" Text,
+  "review_creation_date" Datetime(),
+  "review_answer_timestamp" Datetime(),
+  CONSTRAINT "FK_Olist_order_reviews_dataset.review_answer_timestamp"
+    FOREIGN KEY ("review_answer_timestamp")
+      REFERENCES "Olist_order_dataset"("order_purchase_timestamp")
+);
+
+CREATE TABLE "Olist_products_dataset" (
+  "product_id" Varchar(255),
+  "product_category_name" Text,
+  "product_name_lenght" Int,
+  "product_description_lenght" Int,
+  "product_photos_qty" Int,
+  "product_weight_g" Int,
+  "product_length_cm" Int,
+  "product_height_cm" Int,
+  "product_width_cm" Int
+);
+
+CREATE TABLE "Product_category_name_translation" (
+  "product_category_name" Varchar(255),
+  "product_category_name_english" Varchar(255)
+);
+
